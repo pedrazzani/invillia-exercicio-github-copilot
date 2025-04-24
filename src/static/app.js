@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const activitySelect = document.getElementById("activity");
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
+  const themeToggle = document.getElementById("theme-toggle");
 
   // Function to fetch activities from API
   async function fetchActivities() {
@@ -25,6 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <div class="participants">
+            <h5>Participants:</h5>
+            <ul>
+              ${
+                details.participants.length > 0
+                  ? details.participants
+                      .map((participant) => `<li>${participant}</li>`)
+                      .join("")
+                  : "<li>No participants yet</li>"
+              }
+            </ul>
+          </div>
         `;
 
         activitiesList.appendChild(activityCard);
@@ -79,6 +92,12 @@ document.addEventListener("DOMContentLoaded", () => {
       messageDiv.classList.remove("hidden");
       console.error("Error signing up:", error);
     }
+  });
+
+  // Handle theme toggle
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("green-theme");
+    themeToggle.textContent = document.body.classList.contains("green-theme") ? "🌙" : "☀️";
   });
 
   // Initialize app
